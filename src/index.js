@@ -50,9 +50,73 @@ function calculator() {
     };
 }
 
+/* 
+    4. A caesarCipher function that takes a string and a shift factor
+    and returns it with each character "shifted" 
+*/ 
+function caesarCipher(str, shiftFactor) {
+    let resultStr = '';
+
+    // split the string into the individual characters
+    characters = str.split('');
+    
+    // iterate over the characters and construct the result string character by character
+    characters.forEach((char) => {
+        let shiftedChar = char;
+
+        // shift then by the shiftFactor if they are letters
+        if (isLetter(char)) {
+            // to faciliate the wrap around for the shift we need to center and mod the char values
+            const centering_val = (char === char.toUpperCase()) ? 'A'.charCodeAt() : 'a'.charCodeAt()
+
+            const charcode = char.charCodeAt();
+            shiftedChar = String.fromCharCode(mod(charcode - centering_val + shiftFactor, 26) + centering_val);
+        } 
+
+        // append the shifted char to the result string
+        resultStr += shiftedChar;
+    });
+
+    return resultStr;
+}
+
+// helper function that checks whether the given char is a letter
+function isLetter(char) {
+    return char.match(/[A-Z|a-z]/i);
+}
+
+// helper function that implements modulus, including for negatives
+function mod(val, modulus) {
+    const remainder = val % modulus;
+    return remainder < 0 ? remainder + modulus : remainder;
+}
+
+/* 
+    5. An analyzeArray function that takes an array of numbers and returns 
+    an object with the following properties: average, min, max, and length 
+*/ 
+function analyzeArray(arr) {
+    // if the passed in argument is not an array or . . . 
+    // if any value in the array is not a number, return an error string
+    if (arr.constructor !== Array) {
+        return 'Invalid argument: not an array';
+    } else if (arr.some((val) => typeof val !== 'number')) {
+        return 'Not a valid array: contains a non-numeric value';
+    } else {
+        return {
+            average: arr.reduce((a, b) => a + b, 0) / arr.length,
+            min: Math.min(...arr),
+            max: Math.max(...arr),
+            length: arr.length
+        };
+    }
+}
+
 module.exports = {
     sum,
     capitalize,
     reverseString,
-    calculator
+    calculator,
+    caesarCipher,
+    analyzeArray
 };

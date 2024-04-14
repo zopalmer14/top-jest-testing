@@ -234,3 +234,101 @@ test('divides two operands and returns the quotient', () => {
         expect(actual).toBeCloseTo(testCase.expected);
     });
 });
+
+// 4. tests for the caesarCipher function
+test('encrypts the string by shifting its characters by the shift factor', () => {
+    // create an array of test cases
+    const testCases = [
+        {
+            input: {
+                str: 'Hello! This is a test input for Jest.',
+                shiftFactor: 7
+            },
+            expected: 'Olssv! Aopz pz h alza puwba mvy Qlza.'
+        },
+        {
+            input: {
+                str: 'Hello! This is a test input for Jest.',
+                shiftFactor: -5
+            },
+            expected: 'Czggj! Ocdn dn v ozno dikpo ajm Ezno.'
+        },
+        {
+            input: {
+                str: 'Hello! This is a test input for Jest.',
+                shiftFactor: 1
+            },
+            expected: 'Ifmmp! Uijt jt b uftu joqvu gps Kftu.'
+        },
+        {
+            input: {
+                str: 'Hello! This is a test input for Jest.',
+                shiftFactor: -1
+            },
+            expected: 'Gdkkn! Sghr hr z sdrs hmots enq Idrs.'
+        },
+    ];
+
+    // check each of the test cases
+    testCases.forEach((testCase) => {
+        const actual = index.caesarCipher(testCase.input.str, testCase.input.shiftFactor);
+        expect(actual).toBe(testCase.expected);
+    });
+});
+
+// 5. tests for the analyzeArray function
+test('analyzes an array of numbers and returns some summary statistics', () => {
+    // create an array of test cases
+    const testCases = [
+        {
+            input: [1, 8, 3, 4, 2, 6],
+            expected: {
+                average: 4,
+                min: 1,
+                max: 8,
+                length: 6
+            }
+        },
+        {
+            input: [1, 2, 3, 4, 5],
+            expected: {
+                average: 3,
+                min: 1,
+                max: 5,
+                length: 5
+            }
+        },
+        {
+            input: [-11, 3, 5, -8, 1],
+            expected: {
+                average: -2,
+                min: -11,
+                max: 5,
+                length: 5
+            }
+        },
+        {
+            input: [],
+            expected: {
+                average: NaN,
+                min: Infinity,
+                max: -Infinity,
+                length: 0
+            }
+        },
+        {
+            input: ['1', 2, 3, 4, 5],
+            expected: 'Not a valid array: contains a non-numeric value'
+        },
+        {
+            input: 'test',
+            expected: 'Invalid argument: not an array'
+        },
+    ];
+
+    // check each of the test cases
+    testCases.forEach((testCase) => {
+        const actual = index.analyzeArray(testCase.input);
+        expect(actual).toEqual(testCase.expected);
+    });
+});
